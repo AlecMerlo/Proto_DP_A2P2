@@ -17,7 +17,7 @@ public class CoffeeBrew : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonUp(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if(Physics.Raycast(ray, out RaycastHit hit))
@@ -28,10 +28,14 @@ public class CoffeeBrew : MonoBehaviour
                     {
                         PickUp();
                     }
-                    else if (GlobalVariables.emptyCoffee > 0)
+                    else if (GlobalVariables.emptyCoffee > 0 && PickUpCoffee.picked1)
                     {
                         StartBrewing();
                     }
+                }
+                else
+                {
+                    PickUpCoffee.picked1 = false;
                 }
             }
         }
@@ -39,6 +43,8 @@ public class CoffeeBrew : MonoBehaviour
 
     void StartBrewing()
     {
+        PickUpCoffee.picked1 = false;
+
         GlobalVariables.emptyCoffee -= 1;
         text.gameObject.SetActive(true);
         progressBar.SetActive(true);
